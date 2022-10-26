@@ -14,40 +14,40 @@ int main(int argc, char* argv[]){
     int oflag = 0;
     int dflag = 0;
     int pflag = 0;
-    int bflag = 0;
     int nflag = 0;
+    int bflag = 0;
     int error = 0;
-	char * anio;
-	char * precioMenor;
-    char * nombre_archivo_salida;
-    char * nombre_archivo_entrada;
-    char * procesoPorPantalla;
-    char * cantidadWorkers;
+	char  anio[100];
+	char precioMenor[100];
+    char nombre_archivo_salida[100];
+    char nombre_archivo_entrada[100];
+    char procesoPorPantalla[100];
+    char cantidadWorkers[100];
     while((option = getopt(argc, argv, "i:o:d:p:n:b")) != -1){
         switch(option){
             case 'i':
                 iflag = 1;
-                nombre_archivo_entrada = optarg;
+                strcpy(nombre_archivo_entrada,optarg);
                 break;
             case 'o':
                 oflag = 1;
-                nombre_archivo_salida = optarg;
+                strcpy(nombre_archivo_salida,optarg);
                 break;
             case 'd':
                 dflag = 1;
-                anio = optarg;
+                strcpy(anio,optarg);
                 break;
             case 'p':
                 pflag = 1;
-                precioMenor = optarg;
+                strcpy(precioMenor,optarg);
                 break;
             case 'n':
                 nflag = 1;
-                cantidadWorkers = optarg;
+                strcpy(cantidadWorkers,optarg);
                 break;
             case 'b':
                 bflag = 1;
-                procesoPorPantalla = optarg;
+                strcpy(procesoPorPantalla,optarg);
                 break;
             case '?':
                 error = 1;
@@ -55,6 +55,14 @@ int main(int argc, char* argv[]){
             exit(0);
         }
     }
+
+    printf("anio: %s\n",anio);
+	printf("precio menor: %s\n",precioMenor);
+	printf("Nombre archivo salida: %s\n",nombre_archivo_salida);
+	printf("Nmbre archivo entrada: %s\n",nombre_archivo_entrada);
+	printf("workers: %s\n",cantidadWorkers);
+    printf("bflag: %s\n",procesoPorPantalla);
+    
         int status;
         int pid= fork();
         if(pid==0){

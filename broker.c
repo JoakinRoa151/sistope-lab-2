@@ -19,24 +19,29 @@ int main(int argc, char* argv[]){
     // conversion de los argumentos a enteros
     int anio= atoi(argv[3]);
 	int precioMenor= atoi(argv[4]);
-    char * nombre_archivo_salida= argv[2];
-    char * nombre_archivo_entrada=argv[1];
-    char * procesoPorPantalla= argv[5];
+    char nombre_archivo_salida[100];
+	strcpy(nombre_archivo_salida,argv[2]);
+    char nombre_archivo_entrada[100];
+	strcpy(nombre_archivo_entrada,argv[1]);
+    char  procesoPorPantalla[100];
+	strcpy(procesoPorPantalla,argv[6]);
     int cantidadWorkers= atoi(argv[5]);
 
     printf("anio: %d\n",anio);
 	printf("precio menor: %d\n",precioMenor);
 	printf("Nombre archivo salida: %s\n",nombre_archivo_salida);
-	printf("NOmbre archivo entrada: %s\n",nombre_archivo_entrada);
+	printf("Nmbre archivo entrada: %s\n",nombre_archivo_entrada);
 	printf("workers: %d\n",cantidadWorkers);
     printf("bflag: %s\n",procesoPorPantalla);
-    // pid de los procesos hijos;
+    
+	
+	// pid de los procesos hijos;
 	int workers_pid[cantidadWorkers];
 
 	// pipes
-	int fds1[cantidadWorkers][2];
-	int fds2[cantidadWorkers][2];
-	//cantidad de pipes por proceso que es igual al numero de anios
+	int fds1[cantidadWorkers][2]; // padre escritura 1
+	int fds2[cantidadWorkers][2]; // padre lectura 0
+	//cantidad de pipes por proceso que es igual al numero de workers
 	
 	for(int cont = 0; cont < cantidadWorkers; cont++){
 		pipe(fds1[cont]);
@@ -50,8 +55,19 @@ int main(int argc, char* argv[]){
 			exit(1);
     
         }else if(workers_pid[cont] == 0){
-            
+            execlp("./worker", "worker",NULL);
         }
+		else{
+			dup2(fds1[cont][1],STDOUT_FILENO);
+			close(fds1[cont][0]);
+			write(fds1[cont][1],nombre_archivo_entrada,100);
+			printf("HOLA SOY EL PADRE Y ENVIE EL NOMBRE DEL ARCHIVO DE ENTRADA AL HIJO\n");
+			waitpid(workers_pid[cont],NULL,0);
+		}
+	
+	
+	}
+
 
     
     
