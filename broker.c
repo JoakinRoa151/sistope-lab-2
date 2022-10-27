@@ -54,33 +54,47 @@ int main(int argc, char* argv[]){
 			printf("Error al crear el proceso hijo");
 			exit(1);
     
-        }else if(workers_pid[cont] == 0){
-            execlp("./worker", "worker",NULL);
+        }else if(workers_pid[cont] > 0){
+
+			// ESCRITURA PADRE
+			close(fds1[cont][0]);
+			if(dup2(fds1[cont][1],STDOUT_FILENO) == -1){
+				printf("Error al duplicar el descriptor de archivo");
+				exit(1);
+			}
+			write(STDOUT_FILENO,nombre_archivo_entrada,sizeof(nombre_archivo_entrada));
+			
+			close(fds1[cont][1]);
+			
+			
+			// LECTURA PADRE
+			
+			/*close(fds1[cont][1]);
+			dup2(fds1[cont][0],STDIN_FILENO);
+			char buff[100];
+			read(STDIN_FILENO,buff,sizeof(buff));
+			printf("HOLA SOY EL PADRE Y RECIBI EL MENSAJE DE MI HIJO: %s\n",buff);
+			*/
+			waitpid(workers_pid[cont],NULL,0);
         }
 		else{
-			dup2(fds1[cont][1],STDOUT_FILENO);
+			// ESCRITURA HIJO
+			/*close(fds1[cont][0]);
+			dup2(fds1[cont][1],STDOUT_FILENO);*/
+			// LECTURA HIJO
+			printf(" cuantas veces entro al hijo \n");
+			close(fds1[cont][1]);
+			if(dup2(fds1[cont][0],STDIN_FILENO) == -1){
+				printf("Error al duplicar el descriptor de archivo");
+				exit(1);
+			}
 			close(fds1[cont][0]);
-			write(fds1[cont][1],nombre_archivo_entrada,100);
-			printf("HOLA SOY EL PADRE Y ENVIE EL NOMBRE DEL ARCHIVO DE ENTRADA AL HIJO\n");
-			waitpid(workers_pid[cont],NULL,0);
+            execlp("./worker", "worker",NULL);
+			break;
 		}
-	
-	
 	}
 
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     return 0;
 }

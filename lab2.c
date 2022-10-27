@@ -21,8 +21,8 @@ int main(int argc, char* argv[]){
 	char precioMenor[100];
     char nombre_archivo_salida[100];
     char nombre_archivo_entrada[100];
-    char procesoPorPantalla[100];
-    char cantidadWorkers[100];
+    char procesoPorPantalla[100] = "0";
+    char cantidadWorkers[100] = "1";
     while((option = getopt(argc, argv, "i:o:d:p:n:b")) != -1){
         switch(option){
             case 'i':
@@ -47,7 +47,7 @@ int main(int argc, char* argv[]){
                 break;
             case 'b':
                 bflag = 1;
-                strcpy(procesoPorPantalla,optarg);
+                strcpy(procesoPorPantalla,"1");
                 break;
             case '?':
                 error = 1;
