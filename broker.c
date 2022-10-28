@@ -60,6 +60,7 @@ int main(int argc, char *argv[])
 		}
 		else if (workers_pid[cont] == 0)
 		{
+			//printf(" cuantos hijos creas?\n");
 			// ESCRITURA HIJO
 			/*close(fds1[cont][0]);
 			dup2(fds1[cont][1],STDOUT_FILENO);*/

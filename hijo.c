@@ -8,8 +8,6 @@ void escrituraArchivoHijo(char*nombreArchivo, int anio, char * nombreJuegoMasCar
 	fclose(archivo);
 }
 
-
-
 /*
 Entrada: nombre del archivo, posicion inicial, posicion final
 Salida: cantidad de lineas de un anio en el archivo  

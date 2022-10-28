@@ -5,7 +5,6 @@
 #include <time.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include "estructura.h"
 
 int contarLineas(char * nombreArchivo);
 int * agregarDatos(int* lista,int p,int *n);
