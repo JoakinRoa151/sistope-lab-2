@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "wait.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "fworker.h": "c",
+        "math.h": "c"
     }
 }

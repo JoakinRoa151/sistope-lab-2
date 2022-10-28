@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
 				printf("Error al duplicar el descriptor de archivo");
 				exit(1);
 			}
-			close(fds1[cont][0]);
+			//close(fds1[cont][0]);
 			execlp("./worker", "worker", NULL);
 		}
 	}
@@ -92,13 +92,16 @@ int main(int argc, char *argv[])
 	while(fgets(buffer,sizeof(buffer),archivo) != NULL){
 		// ESCRITURA PADRE
 		int hijo = rand() % cantidadWorkers;
-		write(fds1[hijo][1], buffer, sizeof(buffer));
-		//close(fds1[i][1]);
+		if((write(fds1[hijo][1], buffer, sizeof(buffer)))==-1){
+			printf("Error al escribir en el pipe");
+			exit(1);
+		}
+		//close(fds1[hijo][1]);
 	}
 
 	for (int i = 0; i < cantidadWorkers; i++)
 	{
-		write(fds1[i][1], "FIN", sizeof("FIN"));
+		write(fds1[i][1],"FIN", sizeof("FIN"));
 	}
 	/*else if (workers_pid[cont] > 0)
 	{
