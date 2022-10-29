@@ -18,8 +18,7 @@ int main(int argc, char *argv[])
         strcat(lectura, ",+,");
         contador++;
     }
-    printf("lectura : %s\n", lectura);
-    printf("contador: %d\n", contador);
+   
 
     // declaracion arreglo de lineas
     char **lineas = (char **) malloc(sizeof(char*) * (contador)); 
@@ -35,6 +34,7 @@ int main(int argc, char *argv[])
     }
     printf("lectura : %s\n", lectura);
     printf("contador: %d\n", contador);
+
     juego *listadoJuegos = (juego *)malloc(sizeof(juego) * (contador));
     for (int i = 0; i < contador; i++)
     {
@@ -50,6 +50,11 @@ int main(int argc, char *argv[])
         free(lineas[i]);
     }
     free(lineas);
+    
+
+
+
+
 
 
     return 0;

@@ -189,8 +189,6 @@ float * calcularPorcentajePlataforma(juego*listadoJuegosAnio, int n){
     porcentajesPlataforma[0]=porcentajeWin;
     porcentajesPlataforma[1]=porcentajeLin;
     porcentajesPlataforma[2]=porcentajeMac;
-    
-    
 	return porcentajesPlataforma;
 }
 /*
@@ -212,8 +210,6 @@ juego menorPrecio (juego*listadoJuegosAnio, int n){
         }
     }
     return juegoMasBarato;
-    
-
 }
 
 

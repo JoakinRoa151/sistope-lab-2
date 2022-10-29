@@ -15,11 +15,6 @@ struct juego{
     char mac [100];
     char linuxx [100];
     };
-// estructura para las posiciones que se entregan a los hijos
-typedef struct anioPosicion anioPosicion;
-struct anioPosicion{
-	int posicionFinal;
-	int anio;
-};
+
 
 #endif /* estructuras_h_ */

@@ -7,3 +7,4 @@
 #include "estructura.h"
 
 juego lecturaJuego(char *lineaJuego);
+juego *agregarJuegoLista(juego *lista, juego juegoAgregar, int *n);
