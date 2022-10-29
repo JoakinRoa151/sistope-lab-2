@@ -146,6 +146,80 @@ float * calcularPorcentajePlataforma(juego*listadoJuegosAnio, int n){
     porcentajesPlataforma[2]=porcentajeMac;
 	return porcentajesPlataforma;
 }
+/*
+Entrada: listado de juegos, inicio, medio, fin
+Salida: -
+Descripción: funcion que ordena el listado de juegos por fecha de lanzamiento
+*/
+
+void merge(juego* listadoJuegos,int inicio,int medio,int fin){
+	
+	juego* listaAux = (juego*)calloc(fin-inicio+1,sizeof(juego));
+	int izq = inicio;
+	int der = medio+1;
+	int k = 0;
+
+	
+	while(izq<=medio && der<=fin){
+		// Sentencia para que ordene por anio de lanzamiento
+		if(listadoJuegos[izq].fechaLanzamiento<=listadoJuegos[der].fechaLanzamiento){
+			
+			listaAux[k] = listadoJuegos[izq];
+			izq++;
+		}else{
+			
+			listaAux[k] = listadoJuegos[der];
+			der++;
+		}
+		k++;
+	} 
+	
+	for(;izq<=medio;izq++){
+		listaAux[k] = listadoJuegos[izq];
+		k++;
+	}
+
+	for(;der<=fin;der++){
+		listaAux[k] = listadoJuegos[der];
+		k++;
+	}
+
+	int l=0;
+	for(k=inicio;k<=fin;k++){
+		listadoJuegos[k] = listaAux[l];
+		l++;
+	}
+	free(listaAux);
+	return;
+}
+
+/*
+Entrada: Listado de juegos, inicio, fin
+Salida: -
+Descripción: mergeSort que ordenara la lista de juegos
+*/
+void mergeSort(juego* listadoJuegos, int inicio, int fin){
+
+	if(inicio==fin){
+		return;
+	} else{ 
+		int medio = (inicio+fin)/2;
+
+		mergeSort(listadoJuegos,inicio,medio);
+
+		mergeSort(listadoJuegos,medio+1,fin);
+
+		merge(listadoJuegos,inicio,medio,fin);
+		return;
+	}
+}
+
+
+
+
+
+
+
 
 // Función que obtienes los juegos gratis de la plataforma.
 /* int * obtenerJuegosGratis(int*listadoJuegosAnio, int n){

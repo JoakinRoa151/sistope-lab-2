@@ -51,8 +51,11 @@ int main(int argc, char *argv[])
     }
     free(lineas);
     
-
-
+    // Empezando los calculos
+    int cantidadJuegos = contador;
+    
+    mergeSort(listadoJuegos, 0, cantidadJuegos - 1);
+    
 
 
 
