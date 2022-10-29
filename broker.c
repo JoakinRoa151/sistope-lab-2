@@ -1,11 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <time.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include "fbroker.c"
+#include "fbroker.h"
 
 
 int main(int argc, char *argv[])
@@ -17,9 +10,10 @@ int main(int argc, char *argv[])
 	printf("Esta es p: %s\n",argv[4]);
 	printf("Esta es n: %s\n",argv[5]);
     printf("Esta es b: %s\n",argv[6]);*/
+
 	// conversion de los argumentos a enteros
-	int anio = atoi(argv[3]);
-	int precioMenor = atoi(argv[4]);
+	//int anio = atoi(argv[3]);
+	//int precioMenor = atoi(argv[4]);
 	char nombre_archivo_salida[100];
 	strcpy(nombre_archivo_salida, argv[2]);
 	char nombre_archivo_entrada[100];
@@ -28,12 +22,12 @@ int main(int argc, char *argv[])
 	strcpy(procesoPorPantalla, argv[6]);
 	int cantidadWorkers = atoi(argv[5]);
 
-	printf("anio: %d\n", anio);
-	printf("precio menor: %d\n", precioMenor);
-	printf("Nombre archivo salida: %s\n", nombre_archivo_salida);
-	printf("Nmbre archivo entrada: %s\n", nombre_archivo_entrada);
-	printf("workers: %d\n", cantidadWorkers);
-	printf("bflag: %s\n", procesoPorPantalla);
+	// printf("anio: %d\n", anio);
+	// printf("precio menor: %d\n", precioMenor);
+	// printf("Nombre archivo salida: %s\n", nombre_archivo_salida);
+	// printf("Nmbre archivo entrada: %s\n", nombre_archivo_entrada);
+	// printf("workers: %d\n", cantidadWorkers);
+	// printf("bflag: %s\n", procesoPorPantalla);
 
 	// pid de los procesos hijos;
 	int workers_pid[cantidadWorkers];
