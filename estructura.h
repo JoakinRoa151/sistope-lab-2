@@ -19,6 +19,7 @@ struct juego{
 // Se crea una estrcutura para guardar los datos de los juegos por año.
 typedef struct calculosJuegoPorAnio calculosJuegoPorAnio;
 struct calculosJuegoPorAnio{
+    int anioJuego;
     int cantidadJuegos;
     char nombreJuegoMasCaro[100];
     float precioJuegoMasCaro;
@@ -28,7 +29,6 @@ struct calculosJuegoPorAnio{
     int linuxx;
     int mac;
     float sumaPreciosPorAnio;
-    //char juegosGratis[10000];
-
+    char juegosGratis[2500];
     };
 #endif /* estructuras_h_ */

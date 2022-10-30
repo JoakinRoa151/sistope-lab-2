@@ -57,9 +57,9 @@ calculosJuegoPorAnio *agregarCalculoLista(calculosJuegoPorAnio *listaCalculos, c
     for (int i = 0; i < *n; i++)
     {
         nuevaLista[i]=listaCalculos[i];
-        
     }
     nuevaLista[*n]=calculoAgregar;
+    //printf("\n %d \n\n",calculoAgregar.anioJuego);
     *n = *n + 1;
     free(listaCalculos);
     return nuevaLista;
@@ -211,11 +211,6 @@ void mergeSort(juego* listadoJuegos, int inicio, int fin){
 		return;
 	}
 }
-
-
-
-
-
 
 
 

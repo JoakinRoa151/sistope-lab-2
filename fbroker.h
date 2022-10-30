@@ -5,3 +5,6 @@
 #include <time.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include "estructura.h"
+calculosJuegoPorAnio *agregarCalculoLista(calculosJuegoPorAnio *listaCalculos, calculosJuegoPorAnio calculoAgregar, int *n);
+calculosJuegoPorAnio lecturaCalculo(char *lineaJuego);

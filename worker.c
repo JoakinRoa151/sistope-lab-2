@@ -3,13 +3,13 @@
 int main(int argc, char *argv[])
 {
     // LECTURA WORKERS
-    char buff[10000];
+    char buff[1000];
     int contador = 0;
     char lectura[100000] = "";
     char *puntero_string;
     while (1)
     {
-        read(STDIN_FILENO, buff, sizeof(buff));
+        read(STDIN_FILENO, buff, 1000);
         if (strcmp(buff, "FIN") == 0)
         {
             break;
@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
         strcat(lectura, ",+,");
         contador++;
     }
+
     // declaracion arreglo de lineas
     char **lineas = (char **)malloc(sizeof(char *) * (contador));
     // asignando memoria a el arreglo de lineas
@@ -32,8 +33,6 @@ int main(int argc, char *argv[])
         strcpy(lineas[i], puntero_string);
         puntero_string = strtok(NULL, "+");
     }
-    // printf("lectura : %s\n", lectura);
-    printf("contador: %d\n", contador);
 
     juego *listadoJuegos = (juego *)malloc(sizeof(juego) * (contador));
     for (int i = 0; i < contador; i++)
@@ -46,6 +45,7 @@ int main(int argc, char *argv[])
     // write(STDOUT_FILENO, "XDDDDDD", 7);}
 
     // Liberando memoria de  los arreglos
+
     for (int i = 0; i < contador; i++)
     {
         free(lineas[i]);
@@ -55,6 +55,7 @@ int main(int argc, char *argv[])
     // Empezando los calculos
     int cantidadJuegos = contador;
     // Ordenamos la lista de juegos de el anio mas pequeño al mas grande
+
     mergeSort(listadoJuegos, 0, cantidadJuegos - 1);
 
     // Variables para calcular los datos necesarios
@@ -70,32 +71,39 @@ int main(int argc, char *argv[])
     int mac = 0;
     int linuxx = 0;
     int cantidadJuegosPorAnio = 0;
-    int cantidadAnios=0;
+    int cantidadAnios = 0;
     float sumaPreciosPorAnio = 0;
+    char juegosGratis[2500] = "";
     // Declaramos arreglo para guardar los datos de cada año
     int lenListadoCalculosPorAnio = 0;
     calculosJuegoPorAnio *listadoCalculosPorAnio = (calculosJuegoPorAnio *)malloc(sizeof(calculosJuegoPorAnio) * (lenListadoCalculosPorAnio));
     // anio a los que pertenecen los juegos que se esta calculando
     int anioJuegosActual = listadoJuegos[0].fechaLanzamiento;
+
     for (int i = 0; i < cantidadJuegos; i++)
     {
         if (anioJuegosActual != listadoJuegos[i].fechaLanzamiento)
         {
             // contador de anios
             cantidadAnios++;
+
             // Guardamos los datos calculados de un año
+            calculoJuego.anioJuego = anioJuegosActual;
             calculoJuego.cantidadJuegos = cantidadJuegosPorAnio;
             strcpy(calculoJuego.nombreJuegoMasCaro, juegoMasCaro);
             strcpy(calculoJuego.nombreJuegoMasBarato, juegoMasBarato);
+            strcpy(calculoJuego.juegosGratis, juegosGratis);
             calculoJuego.precioJuegoMasBarato = precioMasBarato;
             calculoJuego.precioJuegoMasCaro = precioMasCaro;
             calculoJuego.windows = windows;
             calculoJuego.mac = mac;
             calculoJuego.linuxx = linuxx;
             calculoJuego.sumaPreciosPorAnio = sumaPreciosPorAnio;
-           // printf(" %d, %d, %d, %d, %s, %s, %lf, %lf, %lf \n ", calculoJuego.cantidadJuegos, calculoJuego.windows, calculoJuego.mac, calculoJuego.linuxx, calculoJuego.nombreJuegoMasCaro, calculoJuego.nombreJuegoMasBarato, calculoJuego.precioJuegoMasCaro, calculoJuego.precioJuegoMasBarato, calculoJuego.sumaPreciosPorAnio);
+
+            // printf(" %d, %d, %d, %d, %s, %s, %lf, %lf, %lf \n ", calculoJuego.cantidadJuegos, calculoJuego.windows, calculoJuego.mac, calculoJuego.linuxx, calculoJuego.nombreJuegoMasCaro, calculoJuego.nombreJuegoMasBarato, calculoJuego.precioJuegoMasCaro, calculoJuego.precioJuegoMasBarato, calculoJuego.sumaPreciosPorAnio);
+            // printf("%d %s\n", anioJuegosActual,calculoJuego.juegosGratis);
             // agregar este struct  a un array de structs
-            listadoCalculosPorAnio=agregarCalculoLista(listadoCalculosPorAnio, calculoJuego, &lenListadoCalculosPorAnio);
+            listadoCalculosPorAnio = agregarCalculoLista(listadoCalculosPorAnio, calculoJuego, &lenListadoCalculosPorAnio);
             // Se hace un reset de las variables para calcular los datos de el siguiente año.
             anioJuegosActual = listadoJuegos[i].fechaLanzamiento;
             windows = 0;
@@ -105,6 +113,7 @@ int main(int argc, char *argv[])
             sumaPreciosPorAnio = 0;
             strcpy(juegoMasCaro, listadoJuegos[i].nombre);
             strcpy(juegoMasBarato, listadoJuegos[i].nombre);
+            strcpy(juegosGratis, "");
             precioMasBarato = listadoJuegos[i].precio;
             precioMasCaro = listadoJuegos[i].precio;
         }
@@ -135,11 +144,53 @@ int main(int argc, char *argv[])
         {
             linuxx++;
         }
+        if (strcmp(listadoJuegos[i].gratuidad, "True") == 0)
+        {
+            strcat(juegosGratis, listadoJuegos[i].nombre);
+            strcat(juegosGratis, "\n");
+        }
         cantidadJuegosPorAnio++;
     }
-    for(int i=0;i<cantidadAnios;i++){
-        printf(" %d, %d, %d, %d, %s, %s, %lf, %lf, %lf \n ", listadoCalculosPorAnio[i].cantidadJuegos, listadoCalculosPorAnio[i].windows, listadoCalculosPorAnio[i].mac, listadoCalculosPorAnio[i].linuxx, listadoCalculosPorAnio[i].nombreJuegoMasCaro, listadoCalculosPorAnio[i].nombreJuegoMasBarato, listadoCalculosPorAnio[i].precioJuegoMasCaro, listadoCalculosPorAnio[i].precioJuegoMasBarato, listadoCalculosPorAnio[i].sumaPreciosPorAnio);
-    
+    // Guardamos los datos calculados deL ultimo año
+    calculoJuego.anioJuego = anioJuegosActual;
+    calculoJuego.cantidadJuegos = cantidadJuegosPorAnio;
+    strcpy(calculoJuego.nombreJuegoMasCaro, juegoMasCaro);
+    strcpy(calculoJuego.nombreJuegoMasBarato, juegoMasBarato);
+    calculoJuego.precioJuegoMasBarato = precioMasBarato;
+    calculoJuego.precioJuegoMasCaro = precioMasCaro;
+    calculoJuego.windows = windows;
+    calculoJuego.mac = mac;
+    calculoJuego.linuxx = linuxx;
+    calculoJuego.sumaPreciosPorAnio = sumaPreciosPorAnio;
+    strcpy(calculoJuego.juegosGratis, juegosGratis);
+    cantidadAnios++;
+    anioJuegosActual = listadoJuegos[cantidadAnios - 1].fechaLanzamiento;
+    // agregar este struct  a un array de structs
+    listadoCalculosPorAnio = agregarCalculoLista(listadoCalculosPorAnio, calculoJuego, &lenListadoCalculosPorAnio);
+    // printf("cual es:%d %s\n",listadoCalculosPorAnio[0].cantidadJuegos, listadoCalculosPorAnio[0].juegosGratis);
+
+    char aux[11000];
+    // printf("contador: %d\n", contador);
+    for (int i = 0; i < cantidadAnios; i++)
+    {
+        //printf("%d ,%d, %d, %d, %d, %s, %s, %f, %f, %f \n ", listadoCalculosPorAnio[i].anioJuego, listadoCalculosPorAnio[i].cantidadJuegos, listadoCalculosPorAnio[i].windows, listadoCalculosPorAnio[i].mac, listadoCalculosPorAnio[i].linuxx, listadoCalculosPorAnio[i].nombreJuegoMasCaro, listadoCalculosPorAnio[i].nombreJuegoMasBarato, listadoCalculosPorAnio[i].precioJuegoMasCaro, listadoCalculosPorAnio[i].precioJuegoMasBarato, listadoCalculosPorAnio[i].sumaPreciosPorAnio);
+        //printf("Juegos gratis de este anio: %s \n", listadoCalculosPorAnio[i].juegosGratis);
+        sprintf(aux, "%d+%d+%d+%d+%d+%s+%s+%s+%f+%f+%f+", listadoCalculosPorAnio[i].anioJuego, listadoCalculosPorAnio[i].cantidadJuegos, listadoCalculosPorAnio[i].windows, listadoCalculosPorAnio[i].mac, listadoCalculosPorAnio[i].linuxx, listadoCalculosPorAnio[i].nombreJuegoMasCaro, listadoCalculosPorAnio[i].nombreJuegoMasBarato, listadoCalculosPorAnio[i].juegosGratis, listadoCalculosPorAnio[i].precioJuegoMasCaro, listadoCalculosPorAnio[i].precioJuegoMasBarato, listadoCalculosPorAnio[i].sumaPreciosPorAnio);
+
+        if (write(STDOUT_FILENO, aux, 11000) == -1)
+        {
+            perror("Error al escribir en el archivo");
+            exit(1);
+        }
     }
+    char buffer[11000] = "FIN";
+    if (write(STDOUT_FILENO, buffer, 11000) == -1)
+    {
+        perror("Error al escribir en el archivo");
+        exit(1);
+    }
+
+    free(listadoJuegos);
+    free(listadoCalculosPorAnio);
     return 0;
 }

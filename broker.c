@@ -1,6 +1,5 @@
 #include "fbroker.h"
 
-
 int main(int argc, char *argv[])
 {
 	srand(time(NULL));
@@ -9,11 +8,11 @@ int main(int argc, char *argv[])
 	printf("Esta es d: %s\n",argv[3]);
 	printf("Esta es p: %s\n",argv[4]);
 	printf("Esta es n: %s\n",argv[5]);
-    printf("Esta es b: %s\n",argv[6]);*/
+	printf("Esta es b: %s\n",argv[6]);*/
 
 	// conversion de los argumentos a enteros
-	//int anio = atoi(argv[3]);
-	//int precioMenor = atoi(argv[4]);
+	// int anio = atoi(argv[3]);
+	// int precioMenor = atoi(argv[4]);
 	char nombre_archivo_salida[100];
 	strcpy(nombre_archivo_salida, argv[2]);
 	char nombre_archivo_entrada[100];
@@ -33,14 +32,14 @@ int main(int argc, char *argv[])
 	int workers_pid[cantidadWorkers];
 
 	// pipes•••••••••••
-	int fds1[cantidadWorkers][2]; // padre escritura 1
-	int fds2[cantidadWorkers][2]; // padre lectura 0
-	//cantidad de pipes por proceso que es igual al numero de workers
+	int fd_padre_hijo[cantidadWorkers][2]; // padre escritura 1
+	int fd_hijo_padre[cantidadWorkers][2]; // padre lectura 0
+	// cantidad de pipes por proceso que es igual al numero de workers
 
 	for (int cont = 0; cont < cantidadWorkers; cont++)
 	{
-		pipe(fds1[cont]);
-		pipe(fds2[cont]);
+		pipe(fd_padre_hijo[cont]);
+		pipe(fd_hijo_padre[cont]);
 	}
 	// creacion de los procesos hijos
 	for (int cont = 0; cont < cantidadWorkers; cont++)
@@ -54,67 +53,76 @@ int main(int argc, char *argv[])
 		}
 		else if (workers_pid[cont] == 0)
 		{
-			//printf(" cuantos hijos creas?\n");
-			// ESCRITURA HIJO
-			/*close(fds1[cont][0]);
-			dup2(fds1[cont][1],STDOUT_FILENO);*/
-			// LECTURA HIJO
-			close(fds1[cont][1]);
-			if (dup2(fds1[cont][0], STDIN_FILENO) == -1)
+			// proceso hijo
+			close(fd_padre_hijo[cont][1]);
+			close(fd_hijo_padre[cont][0]);
+			if (dup2(fd_padre_hijo[cont][0], STDIN_FILENO) == -1)
 			{
 				printf("Error al duplicar el descriptor de archivo");
 				exit(1);
 			}
-			//close(fds1[cont][0]);
+			if (dup2(fd_hijo_padre[cont][1], STDOUT_FILENO) == -1)
+			{
+				printf("Error al duplicar el descriptor de archivo");
+				exit(1);
+			}
+			close(fd_padre_hijo[cont][0]);
+			close(fd_hijo_padre[cont][1]);
 			execlp("./worker", "worker", NULL);
 		}
 	}
 
 	for (int i = 0; i < cantidadWorkers; i++)
 	{
-		close(fds1[i][0]);
-		if (dup2(fds1[i][1], STDOUT_FILENO) == -1)
-		{
-			printf("Error al duplicar el descriptor de archivo");
-			exit(1);
-		}
+		close(fd_padre_hijo[i][0]);
+		close(fd_hijo_padre[i][1]);
 	}
-
+	char linea[1000];
 	// Se abre el archivo.
-	FILE * archivo = fopen(nombre_archivo_entrada, "r");
-	char buffer[10000];
-	while(fgets(buffer,sizeof(buffer),archivo) != NULL){
+	FILE *archivo = fopen(nombre_archivo_entrada, "r");
+	char buffer[1000];
+	while (fgets(buffer, 1000, archivo) != NULL)
+	{
 		// ESCRITURA PADRE
 		int hijo = rand() % cantidadWorkers;
-		if((write(fds1[hijo][1], buffer, sizeof(buffer)))==-1){
+		strcpy(linea, buffer);
+		if ((write(fd_padre_hijo[hijo][1], linea, 1000)) == -1)
+		{
 			printf("Error al escribir en el pipe");
 			exit(1);
 		}
-		//close(fds1[hijo][1]);
 	}
 
 	for (int i = 0; i < cantidadWorkers; i++)
 	{
-		write(fds1[i][1],"FIN", sizeof("FIN"));
+		if ((write(fd_padre_hijo[i][1], "FIN", sizeof("FIN")) == -1)){
+			printf("Error al escribir en el pipe");
+			exit(1);
+		}
 	}
-	/*else if (workers_pid[cont] > 0)
+	int lenListadoCalculos=0;
+	calculosJuegoPorAnio * listadoCalculos;
+	int condicion;
+	char buffer2[11000];
+	calculosJuegoPorAnio calculoPorAnio;
+	for (int i = 0; i < cantidadWorkers; i++)
 	{
+		condicion=1;
+		while (condicion == 1)
+		{
+			read(fd_hijo_padre[i][0], buffer2, 11000);
+			if(strcmp(buffer2,"FIN")==0){
+				condicion=0;
+				printf(" \n TERMINOOO \n\n");
+			}
+			//printf("\n %s \n", buffer2);
+			else{
+				printf("\n llego? \n");
+				calculoPorAnio= lecturaCalculo(buffer2);
+				printf("%d %d %d %d %d %s %s %s %f %f %f", calculoPorAnio.anioJuego, calculoPorAnio.cantidadJuegos, calculoPorAnio.windows, calculoPorAnio.mac, calculoPorAnio.linuxx, calculoPorAnio.nombreJuegoMasCaro, calculoPorAnio.nombreJuegoMasBarato, calculoPorAnio.juegosGratis, calculoPorAnio.precioJuegoMasCaro, calculoPorAnio.precioJuegoMasBarato, calculoPorAnio.sumaPreciosPorAnio);
 
-		// ESCRITURA PADRE
-
-		write(fds1[cont][1], nombre_archivo_entrada, sizeof(nombre_archivo_entrada));
-
-		close(fds1[cont][1]);
-
-		// LECTURA PADRE
-
-		close(fds1[cont][1]);
-			dup2(fds1[cont][0],STDIN_FILENO);
-			char buff[100];
-			read(STDIN_FILENO,buff,sizeof(buff));
-			printf("HOLA SOY EL PADRE Y RECIBI EL MENSAJE DE MI HIJO: %s\n",buff);
-			
-		waitpid(workers_pid[cont], NULL, 0);
-	}*/
+			}
+		}
+	}
 	return 0;
 }
