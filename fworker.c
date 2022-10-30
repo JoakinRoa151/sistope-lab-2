@@ -38,32 +38,30 @@ juego *agregarJuegoLista(juego *listaJuegos, juego juegoAgregar, int *n)
     juego *nuevaLista = malloc(sizeof(juego) * (*n + 1));
     for (int i = 0; i < *n; i++)
     {
-        /*nuevalista[i].id = lista[i].id;
-        strcpy(nuevalista[i].nombre, lista[i].nombre);
-        nuevalista[i].restriccion = lista[i].restriccion;
-        nuevalista[i].precio = lista[i].precio;
-        strcpy(nuevalista[i].proximamente, lista[i].proximamente);
-        nuevalista[i].fechaLanzamiento = lista[i].fechaLanzamiento;
-        strcpy(nuevalista[i].gratuidad, lista[i].gratuidad);
-        strcpy(nuevalista[i].windows, lista[i].windows);
-        strcpy(nuevalista[i].mac, lista[i].mac);
-        strcpy(nuevalista[i].linuxx, lista[i].linuxx);*/
         nuevaLista[i]=listaJuegos[i];
     }
-
-   /* nuevalista[*n].id = juegoAgregar.id;
-    strcpy(nuevalista[*n].nombre, juegoAgregar.nombre);
-    nuevalista[*n].restriccion = juegoAgregar.restriccion;
-    nuevalista[*n].precio = juegoAgregar.precio;
-    strcpy(nuevalista[*n].proximamente, juegoAgregar.proximamente);
-    nuevalista[*n].fechaLanzamiento = juegoAgregar.fechaLanzamiento;
-    strcpy(nuevalista[*n].gratuidad, juegoAgregar.gratuidad);
-    strcpy(nuevalista[*n].windows, juegoAgregar.windows);
-    strcpy(nuevalista[*n].mac, juegoAgregar.mac);
-    strcpy(nuevalista[*n].linuxx, juegoAgregar.linuxx);*/
     nuevaLista[*n]=juegoAgregar;
     *n = *n + 1;
     free(listaJuegos);
+    return nuevaLista;
+}
+
+/*
+Entrada: lista de struct anioPosicion, posicion final, anio, tamaño de la lista
+Salida: lista de struct anioPosicion con un dato agregado
+Descripción: funcion que agrega datos de una lista tipo struct anio Posicion
+*/
+calculosJuegoPorAnio *agregarCalculoLista(calculosJuegoPorAnio *listaCalculos, calculosJuegoPorAnio calculoAgregar, int *n)
+{
+    calculosJuegoPorAnio *nuevaLista = malloc(sizeof(calculosJuegoPorAnio) * (*n + 1));
+    for (int i = 0; i < *n; i++)
+    {
+        nuevaLista[i]=listaCalculos[i];
+        
+    }
+    nuevaLista[*n]=calculoAgregar;
+    *n = *n + 1;
+    free(listaCalculos);
     return nuevaLista;
 }
 
