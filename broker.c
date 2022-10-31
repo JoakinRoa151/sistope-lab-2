@@ -2,6 +2,7 @@
 
 int main(int argc, char *argv[])
 {
+	
 	srand(time(NULL));
 	/*printf("Esta es i: %s\n",argv[1]);
 	printf("Esta es o: %s\n",argv[2]);
@@ -82,6 +83,7 @@ int main(int argc, char *argv[])
 	char buffer[1000];
 	while (fgets(buffer, 1000, archivo) != NULL)
 	{
+		
 		// ESCRITURA PADRE
 		int hijo = rand() % cantidadWorkers;
 		strcpy(linea, buffer);
@@ -91,7 +93,7 @@ int main(int argc, char *argv[])
 			exit(1);
 		}
 	}
-
+	
 	for (int i = 0; i < cantidadWorkers; i++)
 	{
 		if ((write(fd_padre_hijo[i][1], "FIN", sizeof("FIN")) == -1)){
@@ -102,8 +104,10 @@ int main(int argc, char *argv[])
 	int lenListadoCalculos=0;
 	calculosJuegoPorAnio * listadoCalculos;
 	int condicion;
+
 	char buffer2[11000];
 	calculosJuegoPorAnio calculoPorAnio;
+
 	for (int i = 0; i < cantidadWorkers; i++)
 	{
 		condicion=1;
@@ -115,15 +119,15 @@ int main(int argc, char *argv[])
 				condicion=0;
 				printf(" \n TERMINOOO \n\n");
 			}
-			else{
+			/*else{
 				//printf("\n llego? \n");
 				calculoPorAnio= lecturaCalculo(buffer2);
 				printf("%d %d %d %d %d %s %s %s %f %f %f \n", calculoPorAnio.anioJuego, calculoPorAnio.cantidadJuegos, calculoPorAnio.windows, calculoPorAnio.mac, calculoPorAnio.linuxx, calculoPorAnio.nombreJuegoMasCaro, calculoPorAnio.nombreJuegoMasBarato, calculoPorAnio.juegosGratis, calculoPorAnio.precioJuegoMasCaro, calculoPorAnio.precioJuegoMasBarato, calculoPorAnio.sumaPreciosPorAnio);
 				//evaluacionCalculo(listadoCalculos,calculoPorAnio,&lenListadoCalculos);
-			}
+			}*/
 		}
 	}
-	printf("LLEGA?");
+	
 	/*
 	FILE *archivoSalida = fopen(nombre_archivo_salida, "w");
 	for (int i = 0; i < lenListadoCalculos; i++)

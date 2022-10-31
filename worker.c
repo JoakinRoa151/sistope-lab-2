@@ -5,7 +5,7 @@ int main(int argc, char *argv[])
     // LECTURA WORKERS
     char buff[1000];
     int contador = 0;
-    char lectura[10000] = "";
+    char lectura[100000] = "";
     char *puntero_string;
     while (1)
     {
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
     int cantidadJuegosPorAnio = 0;
     int cantidadAnios = 0;
     float sumaPreciosPorAnio = 0;
-    char juegosGratis[2500] = "-";
+    char juegosGratis[2500] = "";
     // Declaramos arreglo para guardar los datos de cada año
     int lenListadoCalculosPorAnio = 0;
     calculosJuegoPorAnio *listadoCalculosPorAnio = (calculosJuegoPorAnio *)malloc(sizeof(calculosJuegoPorAnio) * (lenListadoCalculosPorAnio));
@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
             sumaPreciosPorAnio = 0;
             strcpy(juegoMasCaro, listadoJuegos[i].nombre);
             strcpy(juegoMasBarato, listadoJuegos[i].nombre);
-            strcpy(juegosGratis, "-");
+            strcpy(juegosGratis, "");
             precioMasBarato = listadoJuegos[i].precio;
             precioMasCaro = listadoJuegos[i].precio;
         }
@@ -149,7 +149,6 @@ int main(int argc, char *argv[])
             strcat(juegosGratis, listadoJuegos[i].nombre);
             strcat(juegosGratis, "\n");
         }
-        sumaPreciosPorAnio=listadoJuegos[i].precio+sumaPreciosPorAnio;
         cantidadJuegosPorAnio++;
     }
     // Guardamos los datos calculados deL ultimo año
