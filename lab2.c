@@ -48,17 +48,34 @@ int main(int argc, char* argv[]){
         }
     }
     if(iflag!=1){
-        printf("porfavor ingresar nombre del archivo de entrada!!\n");
+        printf("Por favor ingresar nombre del archivo de entrada!!\n");
         return 0;
     }
     if(oflag!=1){
-        printf("porfavor ingresar nombre del archivo de salida!!\n");
+        printf("Por favor ingresar nombre del archivo de salida!!\n");
         return 0;
     }
     if(error==1){
-        printf("porfavor ingrese las variables de entrada!!\n");
+        printf("Por favor ingrese las variables de entrada!!\n");
         return 0;
     }
+    if(atoi(cantidadWorkers)<1){
+        printf("Por favor ingresar un numero de workers mayor a 0\n");
+        return 0;
+    }
+    if(atoi(anio)<0){
+        printf("Por favor ingresar un numero de año mayor o igual a 0\n");
+        return 0;
+    }
+    if(atoi(precioMenor)<0){
+        printf("Por favor ingresar un numero de precio mayor o igual a 0\n");
+        return 0;
+    }
+    if(atoi(procesoPorPantalla)!=0 && atoi(procesoPorPantalla)!=1){
+        printf("Por favor ingresar un numero de proceso por pantalla 0 o 1\n");
+        return 0;
+    }
+
     // printf("anio: %s\n",anio);
 	// printf("precio menor: %s\n",precioMenor);
 	// printf("Nombre archivo salida: %s\n",nombre_archivo_salida);
@@ -70,5 +87,6 @@ int main(int argc, char* argv[]){
         if(pid==0){
             execlp("./broker", "broker", nombre_archivo_entrada,nombre_archivo_salida, anio, precioMenor, cantidadWorkers,procesoPorPantalla,NULL);
         }
+        
     return 0;
 }

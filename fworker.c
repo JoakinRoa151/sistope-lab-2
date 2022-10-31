@@ -86,8 +86,7 @@ int calcularJuegoMasCaro(juego *listadoJuegosAnio, int n)
     return posicionJuegoMasCaro;
 }
 
-// Función para calcular el juego mas barato.
-
+// Descripción: Función para calcular el juego mas barato.
 juego menorPrecio(juego *listadoJuegosAnio, int n)
 {
     float minPrecio = listadoJuegosAnio[0].precio;
@@ -105,8 +104,7 @@ juego menorPrecio(juego *listadoJuegosAnio, int n)
     return juegoMasBarato;
 }
 
-// Función para calcular el promedio de los precios por año
-
+// DesFunción para calcular el promedio de los precios por año
 float  calcularPromedioAnio(juego*listadoJuegosAnio, int n){
 	float sumaPrecios=0;
 	for(int i=0;i<n;i++){
@@ -145,8 +143,8 @@ float * calcularPorcentajePlataforma(juego*listadoJuegosAnio, int n){
 	return porcentajesPlataforma;
 }
 /*
-Entrada: listado de juegos, inicio, medio, fin
-Salida: -
+Entrada: listado de juegos, inicio, medio, fin.
+Salida: Vacío.
 Descripción: funcion que ordena el listado de juegos por fecha de lanzamiento
 */
 
@@ -193,7 +191,7 @@ void merge(juego* listadoJuegos,int inicio,int medio,int fin){
 
 /*
 Entrada: Listado de juegos, inicio, fin
-Salida: -
+Salida: Vacío.
 Descripción: mergeSort que ordenara la lista de juegos
 */
 void mergeSort(juego* listadoJuegos, int inicio, int fin){
@@ -211,8 +209,6 @@ void mergeSort(juego* listadoJuegos, int inicio, int fin){
 		return;
 	}
 }
-
-
 
 // Función que obtienes los juegos gratis de la plataforma.
 /* int * obtenerJuegosGratis(int*listadoJuegosAnio, int n){

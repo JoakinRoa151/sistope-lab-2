@@ -9,7 +9,6 @@ int main(int argc, char *argv[])
 	printf("Esta es p: %s\n",argv[4]);
 	printf("Esta es n: %s\n",argv[5]);
 	printf("Esta es b: %s\n",argv[6]);*/
-
 	// conversion de los argumentos a enteros
 	// int anio = atoi(argv[3]);
 	// int precioMenor = atoi(argv[4]);
@@ -111,18 +110,25 @@ int main(int argc, char *argv[])
 		while (condicion == 1)
 		{
 			read(fd_hijo_padre[i][0], buffer2, 11000);
+			printf("\n %s \n", buffer2);
 			if(strcmp(buffer2,"FIN")==0){
 				condicion=0;
 				printf(" \n TERMINOOO \n\n");
 			}
-			//printf("\n %s \n", buffer2);
 			else{
-				printf("\n llego? \n");
+				//printf("\n llego? \n");
 				calculoPorAnio= lecturaCalculo(buffer2);
-				printf("%d %d %d %d %d %s %s %s %f %f %f", calculoPorAnio.anioJuego, calculoPorAnio.cantidadJuegos, calculoPorAnio.windows, calculoPorAnio.mac, calculoPorAnio.linuxx, calculoPorAnio.nombreJuegoMasCaro, calculoPorAnio.nombreJuegoMasBarato, calculoPorAnio.juegosGratis, calculoPorAnio.precioJuegoMasCaro, calculoPorAnio.precioJuegoMasBarato, calculoPorAnio.sumaPreciosPorAnio);
-
+				printf("%d %d %d %d %d %s %s %s %f %f %f \n", calculoPorAnio.anioJuego, calculoPorAnio.cantidadJuegos, calculoPorAnio.windows, calculoPorAnio.mac, calculoPorAnio.linuxx, calculoPorAnio.nombreJuegoMasCaro, calculoPorAnio.nombreJuegoMasBarato, calculoPorAnio.juegosGratis, calculoPorAnio.precioJuegoMasCaro, calculoPorAnio.precioJuegoMasBarato, calculoPorAnio.sumaPreciosPorAnio);
+				//evaluacionCalculo(listadoCalculos,calculoPorAnio,&lenListadoCalculos);
 			}
 		}
 	}
+	printf("LLEGA?");
+	/*
+	FILE *archivoSalida = fopen(nombre_archivo_salida, "w");
+	for (int i = 0; i < lenListadoCalculos; i++)
+	{
+		fprintf(archivoSalida, "%d %d %d %d %d %s %s %s %f %f %f \n", listadoCalculos[i].anioJuego, listadoCalculos[i].cantidadJuegos, listadoCalculos[i].windows, listadoCalculos[i].mac, listadoCalculos[i].linuxx, listadoCalculos[i].nombreJuegoMasCaro, listadoCalculos[i].nombreJuegoMasBarato, listadoCalculos[i].juegosGratis, listadoCalculos[i].precioJuegoMasCaro, listadoCalculos[i].precioJuegoMasBarato, listadoCalculos[i].sumaPreciosPorAnio);
+	}*/
 	return 0;
 }
